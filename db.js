@@ -1,10 +1,18 @@
 const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
-// Update these with your actual credentials
-const sequelize = new Sequelize('BeersDB', 'beersuser', 'Rooney98@', {
-  host: 'localhost',
-  dialect: 'mysql'
-});
+
+const sequelize = new Sequelize(
+  process.env.MYSQL_DATABASE || process.env.MYSQLDATABASE,
+  process.env.MYSQL_USER || process.env.MYSQLUSER,
+  process.env.MYSQL_PASSWORD || process.env.MYSQLPASSWORD,
+  {
+    host: process.env.MYSQL_HOST || process.env.MYSQLHOST,
+    port: process.env.MYSQL_PORT || process.env.MYSQLPORT,
+    dialect: 'mysql',
+    logging: false,  // optional: to silence SQL logs
+  }
+);
 
 async function testConnection() {
   try {
