@@ -1,6 +1,10 @@
-const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
+const { Sequelize } = require('sequelize');
+
+console.log('DB Host:', process.env.MYSQL_HOST || process.env.MYSQLHOST);
+console.log('DB User:', process.env.MYSQL_USER || process.env.MYSQLUSER);
+console.log('DB Name:', process.env.MYSQL_DATABASE || process.env.MYSQLDATABASE);
 
 const sequelize = new Sequelize(
   process.env.MYSQL_DATABASE || process.env.MYSQLDATABASE,
