@@ -52,7 +52,7 @@ app.delete('/api/beers/:id', async (req, res) => {
 
 app.post('/api/proxy/beer-submit', async (req, res) => {
   try {
-    const response = await fetch('https://emmanuelfalola.app.n8n.cloud/webhook/beer-submit', {
+    const response = await fetch('https://emmanuelfalola.app.n8n.cloud/webhook-test/beer-submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
