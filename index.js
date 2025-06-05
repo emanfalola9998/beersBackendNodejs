@@ -6,7 +6,7 @@ const sequelize = require('./db');
 const app = express();
 
 app.use(cors({
-  origin: 'https://deploy-preview-18--beerfrontend.netlify.app/',
+  origin: 'https://deploy-preview-18--beerfrontend.netlify.app',
   credentials: true,
 }));
 app.use(express.json());
