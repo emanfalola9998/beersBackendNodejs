@@ -50,6 +50,28 @@ app.delete('/api/beers/:id', async (req, res) => {
   res.status(204).send();
 });
 
+app.post('/api/proxy/beer-submit', async (req, res) => {
+  try {
+    const response = await fetch('https://emmanuelfalola.app.n8n.cloud/webhook/beer-submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(req.body),
+    })
+
+    // Forward status and response body
+    res.status(response.status)
+    const data = await response.text()  // or response.json() if you expect JSON
+    res.send(data)
+  } catch (error) {
+    console.error('Proxy error:', error)
+    res.status(500).json({ error: 'Proxy request failed' })
+  }
+})
+
+
+
 const PORT = process.env.PORT || 3001;  // fallback to 3001 if PORT is not set locally
 
 app.listen(PORT, () => {
