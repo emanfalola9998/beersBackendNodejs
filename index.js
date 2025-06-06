@@ -33,7 +33,17 @@ app.post('/api/beers', async (req, res) => {
       return res.status(400).json({ error: 'Missing request body' });
     }
 
-    const { name, abv, description } = req.body;
+    const {
+      name,
+      description,
+      abv: rawAbv
+    } = req.body;
+
+    // Sanitize and convert abv
+    const abv = parseFloat(String(rawAbv).replace('%', '').trim());
+    if (isNaN(abv)) {
+      return res.status(400).json({ error: 'Invalid ABV format' });
+    }
 
     if (!name || !abv || !description) {
       return res.status(400).json({ error: 'Missing required fields' });
