@@ -28,10 +28,25 @@ app.get('/api/beers/:id', async (req, res) => {
 });
 
 app.post('/api/beers', async (req, res) => {
-  const { name, abv } = req.body;
-  const newBeer = await Beer.create({ name, abv });
-  res.status(201).json(newBeer);
+  try {
+    if (!req.body) {
+      return res.status(400).json({ error: 'Missing request body' });
+    }
+
+    const { name, abv, description } = req.body;
+
+    if (!name || !abv || !description) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const newBeer = await Beer.create(req.body);
+    res.status(201).json(newBeer);
+  } catch (err) {
+    console.error('❌ Error saving beer:', err);
+    res.status(500).send('Internal Server Error');
+  }
 });
+
 
 app.put('/api/beers/:id', async (req, res) => {
   const beer = await Beer.findByPk(req.params.id);
