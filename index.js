@@ -1,3 +1,4 @@
+    require('dotenv').config();
     const express = require('express');
     const cors = require('cors');
     const Beer = require('./models/beer');
@@ -5,10 +6,17 @@
 
     const app = express();
 
+    // Determine if local or prod
+    const isLocal = process.env.NODE_ENV !== 'production';
+    const FRONTEND_ORIGIN = isLocal
+    ? 'http://localhost:5173'  // Vite default
+    : 'https://beerfrontend.netlify.app';  // or your Netlify domain
+
     app.use(cors({
-    origin: 'https://deploy-preview-18--beerfrontend.netlify.app',
+    origin: FRONTEND_ORIGIN,
     credentials: true,
     }));
+
     app.use(express.json());
 
     // Sync the model (creates table if needed)
@@ -27,32 +35,6 @@
     res.json(beer);
     });
 
-    // app.post('/api/beers', async (req, res) => {
-    // try {
-    //     if (!req.body) {
-    //     return res.status(400).json({ error: 'Missing request body' });
-    //     }
-
-    //     const {name, description, abv: rawAbv
-    //     } = req.body;
-
-    //     // Sanitize and convert abv
-    //     const abv = parseFloat(String(rawAbv).replace('%', '').trim());
-    //     if (isNaN(abv)) {
-    //     return res.status(400).json({ error: 'Invalid ABV format' });
-    //     }
-
-    //     if (!name || !abv || !description) {
-    //     return res.status(400).json({ error: 'Missing required fields' });
-    //     }
-
-    //     const newBeer = await Beer.create(req.body);
-    //     res.status(201).json(newBeer);
-    // } catch (err) {
-    //     console.error('❌ Error saving beer:', err);
-    //     res.status(500).send('Internal Server Error');
-    // }
-    // });
 
     app.post('/api/beers', async (req, res) => {
     try {
