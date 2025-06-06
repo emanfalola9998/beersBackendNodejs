@@ -59,7 +59,10 @@
         const {
         name,
         description,
-        abv: rawAbv
+        abv: rawAbv,
+        image_url,
+        ph,
+        first_brewed
         } = req.body;
 
         // Normalize and parse ABV
@@ -77,7 +80,10 @@
         const newBeer = await Beer.create({
         name,
         description,
-        abv
+        abv,
+        image_url,
+        ph,
+        first_brewed
         });
 
         res.status(201).json(newBeer);
