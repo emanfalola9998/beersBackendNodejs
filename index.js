@@ -7,12 +7,12 @@
     const app = express();
 
     // Determine if local or prod
-    const isLocal = process.env.NODE_ENV !== 'production';
-    const FRONTEND_ORIGIN = isLocal
-    ? 'http://localhost:5173'  // Vite default
-    : 'https://deploy-preview-18--beerfrontend.netlify.app';  // or your Netlify domain
+    // const isLocal = process.env.NODE_ENV !== 'production';
+    // const FRONTEND_ORIGIN = isLocal
+    // ? 'http://localhost:5173'  // Vite default
+    // : 'https://deploy-preview-18--beerfrontend.netlify.app';  // or your Netlify domain
 
-    
+    const FRONTEND_ORIGIN = "https://deploy-preview-18--beerfrontend.netlify.app"
 
     app.use(cors({
     origin: FRONTEND_ORIGIN,
